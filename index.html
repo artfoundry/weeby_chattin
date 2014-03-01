@@ -7,9 +7,56 @@
   <link href="css/wc.css" rel="stylesheet" type="text/css" />
 
   <script src="js/jquery-1.11.0.min.js" type="text/javascript"></script>
+  <script src="https://cdn.firebase.com/v0/firebase.js"></script>
   <script src="js/wc.js" type="text/javascript"></script>
 </head>
 <body>
+
+  <div id="page_container">
+    <div id="logindiv">
+      <h3>Welcome to</h3>
+      <h1>Weeby Chattin'</h1>
+      <br>
+      <p>What name do you want to go by?</p>
+      <form action="" id="loginform">
+        <label for="username">User name:</label>
+        <input type="text" id="username" name="username" class="formstyle" />
+        <input type="submit" id="login" value="Login" class="buttonstyle" />
+      </form>
+    </div>
+
+    <div id="chatdiv" class="hidden">
+      <h1>Weeby Chattin'</h1>
+
+      <div id="chatdisplay_container">
+        <h2>Hi <span id="printname"></span>!</h2>
+        <h2>What's the latest word?</h2>
+        
+        <div id="chatdisplay"></div>
+
+        <form action="" id="inputform">
+          <label for="chatinput">Chat:</label>
+          <input type="text" id="chatinput" name="chatinput" class="formstyle" />
+          <input type="submit" id="submitchat" value="Say it" class="buttonstyle" />
+        </form>
+      </div>
+
+      <div class="list_container" id="roomlist">
+        <h2>Rooms</h2>
+        <div class="list"></div>
+      </div>
+
+      <div  class="list_container" id="userlist">
+        <h2>Who's chattin' here?</h2>
+        <div class="list"></div>
+      </div>
+    </div>
+
+  </div>
+
+<script>
+  listen();
+</script>
 
 </body>
 </html>

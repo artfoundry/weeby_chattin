@@ -1,0 +1,118 @@
+body {
+  background-color: white;
+  line-height: 1.0;
+  font-size: 100%;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  margin: 0 0 0 0;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+#page_container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50em;
+  height: 40em;
+  margin: -20em auto auto -25em;
+}
+
+#logindiv {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30em;
+  height: 15em;
+  margin: -10em auto auto -16em;
+  padding: 1em;
+  text-align: center;
+  background-color: #66CCFF;
+  border: 2px solid black;
+  border-radius: 6px;
+}
+
+#chatdiv {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 50em;
+  height: 30em;
+  margin: -18em auto auto -25em;
+  text-align: center;
+  background-color: #66CCFF;
+  border: 2px solid black;
+  border-radius: 6px;
+}
+
+#chatdisplay_container {
+  position: absolute;
+  top: 3em;
+  left: 1em;
+  width: 23em;
+  height: 20em;
+  margin: 1em;
+}
+
+#chatdisplay {
+  text-align: left;
+  word-wrap: normal;
+  overflow: auto;
+  background: -webkit-linear-gradient(darkgrey, white); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(darkgrey, white); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(darkgrey, white); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(darkgrey, white); /* Standard syntax */
+  width: 100%;
+  height: 80%;
+  background-color: white;
+  border: 2px solid black;
+  border-radius: 4px;
+  margin-bottom: 1em;
+}
+
+.list_container {
+  position: absolute;
+  top: 3em;
+  right: 1em;
+  width: 20em;
+  height: 8em;
+  margin: 1em;
+}
+
+.list {
+  width: 100%;
+  height: 100%;
+  text-align: left;
+  word-wrap: normal;
+  overflow: auto;
+  background-color: white;
+  border: 2px solid black;
+  border-radius: 4px;
+}
+
+#userlist {
+  top: 15em;
+}
+
+.formstyle {
+  background-color: lightgray;
+  border: 1px solid black;
+  border-radius: 3px;
+}
+
+.buttonstyle {
+  background-color: lightgray;
+  border: 1px solid black;
+  border-radius: 3px;
+  -webkit-box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+h1 {
+  color: darkblue;
+  text-shadow: 2px 2px 4px #666;
+}
+
+.hidden {
+  display: none;
+}
