@@ -30,9 +30,10 @@ function listen() {
         alert ("That room already exists. Use another name.");
       };
     };
-    setInterval(function(){ fbGetRoomList() }, 1000);
-    if (user.currentRoom !== "")
-      fbGetUserList();
+    setInterval(function(){ 
+      fbGetRoomList(); 
+      // fbGetUserList();
+    }, 1000);
   });
 }
 
@@ -54,12 +55,13 @@ function updateRoomList(roomList) {
   roomList.forEach(function(roomData) {
     $("#roomlist").append("<li>" + roomData.name() + "</li>");
   });
+  $("#chatdisplay").scrollTop(CHAT_HEIGHT);  
 }
 
 function updateUserList(userList) {
   $("#userlist").empty();
   userList.forEach(function(userData) {
-    $("#userlist").html("<li>" + userData.val() + "</li>");
+    $("#userlist").append("<li>" + userData.val() + "</li>");
   });
 }
 
@@ -120,8 +122,13 @@ User.prototype.removeFromRoom = function(userList) {
   var fbRoomRef = fbUserRef.parent().parent();
   fbUserRef.remove();
   fbRoomRef.once("value", function(roomData) {
-    if (roomData.hasChild("--users") === false)
+    if (roomData.hasChild("--users") === false) {
       fbRoomRef.remove();
+    }
+    else {
+      fbRoomRef.off("child_added");
+      fbGetUserList.off("value");
+    }
   });
   var message = "<i>" + user.username + " has left the room</i>";
   addChat("System", message);
@@ -144,6 +151,7 @@ User.prototype.setRoom = function(room) {
     firebaseRef.child("rooms").child(room).child("--users").set(userList);
     user.currentRoom = room;
     fbGetRoomList();
+    fbGetUserList();
     var message = "<i>" + user.username + " has joined the room '" + room + "'</i>";
     addChat("System", message);
     fbGetChat();
