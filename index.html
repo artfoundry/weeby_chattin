@@ -20,8 +20,7 @@
       <p>What name do you want to go by?</p>
       <form action="" id="loginform">
         <label for="username">User name:</label>
-        <input type="text" id="username" name="username" class="formstyle" />
-        <input type="submit" id="login" value="Login" class="buttonstyle" />
+        <input type="text" id="username" name="username" class="formstyle" /><input type="submit" id="login" value="Login" class="buttonstyle" />
       </form>
     </div>
 
@@ -36,19 +35,27 @@
 
         <form action="" id="inputform">
           <label for="chatinput">Chat:</label>
-          <input type="text" id="chatinput" name="chatinput" class="formstyle" />
-          <input type="submit" id="submitchat" value="Say it" class="buttonstyle" />
+          <input type="text" id="chatinput" name="chatinput" class="formstyle" size="30" /><input type="submit" id="submitchat" value="Say it" class="buttonstyle" />
         </form>
       </div>
 
-      <div class="list_container" id="roomlist">
+      <div class="list_container">
         <h2>Rooms</h2>
-        <div class="list"></div>
+        <div class="list">
+          <ul id="roomlist" type="none">
+          </ul>
+        </div>
+        <form action="" id="newroom">
+          <input type="text" id="roomname" name="roomname" class="formstyle" size="15" placeholder="New room name" /><input type="submit" id="createroom" value="Create Room" class="buttonstyle" />
+        </form>
       </div>
 
-      <div  class="list_container" id="userlist">
+      <div class="list_container">
         <h2>Who's chattin' here?</h2>
-        <div class="list"></div>
+        <div class="list">
+          <ul id="userlist" type="none">
+          </ul>
+        </div>
       </div>
     </div>
 

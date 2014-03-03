@@ -3,7 +3,7 @@ body {
   line-height: 1.0;
   font-size: 100%;
   font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
-  margin: 0 0 0 0;
+  margin: 0;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -48,7 +48,7 @@ body {
   position: absolute;
   top: 3em;
   left: 1em;
-  width: 23em;
+  width: 25em;
   height: 20em;
   margin: 1em;
 }
@@ -61,11 +61,12 @@ body {
   background: -o-linear-gradient(darkgrey, white); /* For Opera 11.1 to 12.0 */
   background: -moz-linear-gradient(darkgrey, white); /* For Firefox 3.6 to 15 */
   background: linear-gradient(darkgrey, white); /* Standard syntax */
-  width: 100%;
-  height: 80%;
+  width: 90%;
+  height: 70%;
   background-color: white;
   border: 2px solid black;
   border-radius: 4px;
+  padding: 1em;
   margin-bottom: 1em;
 }
 
@@ -73,14 +74,20 @@ body {
   position: absolute;
   top: 3em;
   right: 1em;
-  width: 20em;
-  height: 8em;
+  width: 17em;
+  height: 7em;
   margin: 1em;
 }
 
+#chatdiv div:nth-child(4) {
+  top: 15.5em;
+}
+
 .list {
-  width: 100%;
-  height: 100%;
+  width: 90%;
+  height: 80%;
+  padding: 0;
+  margin-bottom: .5em;
   text-align: left;
   word-wrap: normal;
   overflow: auto;
@@ -89,23 +96,25 @@ body {
   border-radius: 4px;
 }
 
-#userlist {
-  top: 15em;
-}
-
 .formstyle {
-  background-color: lightgray;
+  background-color: white;
   border: 1px solid black;
-  border-radius: 3px;
+  border-radius: 3px 0 0 3px;
+  height: 1.7em;
+  font-size: 1em;
+  margin: 0;
+  padding: 0 5px 0 5px;
 }
 
 .buttonstyle {
   background-color: lightgray;
   border: 1px solid black;
-  border-radius: 3px;
-  -webkit-box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-  -moz-box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  border-left: 0;
+  border-radius: 0 3px 3px 0;
+  height: 1.8em;
+  font-size: 1em;
+  margin: 0;
+  padding: 0 5px 0 5px;
 }
 
 h1 {
@@ -115,4 +124,22 @@ h1 {
 
 .hidden {
   display: none;
+}
+
+ul {
+  padding-left: 0;
+  margin: 0;
+}
+
+li {
+  background-color: #CDF;
+  padding: .4em;
+}
+
+li:nth-child(odd) {
+  background-color: #CCF;
+}
+
+#newroom {
+  text-align: left;
 }
