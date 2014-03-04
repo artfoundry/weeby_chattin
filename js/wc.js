@@ -39,6 +39,10 @@ function updateUI() {
   $("#printname").text(user.username);
 }
 
+function showChatEntry() {
+  $("#inputform").toggle();
+}
+
 function updateChatDiv(chatData) {
   $("#chatdisplay").append("<b>" + chatData.uName + "</b> : " + chatData.text + "<br>");
   $("#chatdisplay").scrollTop(CHAT_HEIGHT);  
@@ -52,11 +56,10 @@ function updateRoomList(roomList) {
       userLoc = "<i> *you are here*</i>";
     $("#roomlist").append("<li>" + roomData.name() + userLoc + "</li>");
   });
-  $("#chatdisplay").scrollTop(CHAT_HEIGHT);
 }
 
 function updateUserList(userList) {
-  $("#userlist").val("");
+  $("#userlist").empty();
   userList.forEach(function(userData) {
     $("#userlist").append("<li>" + userData.val() + "</li>");
   });
@@ -72,11 +75,11 @@ function addChat(source, message) {
 function checkRoomName(room) {
   var firebaseRef = new Firebase("https://weebychattin.firebaseio.com/");
   firebaseRef.once("value", function(fbSnapshot) {
-    if (fbSnapshot.hasChild("rooms")) {
-      var roomList = fbSnapshot.child("rooms").val();
-      if (checkName(room, roomList, "#roomname") !== "")
-        user.setRoom(room);
-    };
+    var roomList = {};
+    if (fbSnapshot.hasChild("rooms"))
+      roomList = fbSnapshot.child("rooms").val();
+    if (checkName(room, roomList, "#roomname") !== "")
+      user.setRoom(room);
   });
 }
 
@@ -157,7 +160,7 @@ User.prototype.setRoom = function(room) {
         user.removeFromRoom(userList);
         userList.length = 0; // wipe the list clean in case the room moving to is new
       };
-      if (fbSnapshot.child("rooms").hasChild(room)) // if joining a room already created
+      if ((room != "") && (fbSnapshot.child("rooms").hasChild(room))) // if joining a room already created
         userList = fbSnapshot.child("rooms").child(room).child("--users").val();
     };
     if (room !== "") {
@@ -169,6 +172,7 @@ User.prototype.setRoom = function(room) {
       var message = "<i>" + user.username + " has joined the room '" + room + "'</i>";
       addChat("System", message);
       fbGetChat();
+      showChatEntry();
     };
   });
 }
