@@ -124,6 +124,7 @@ body {
   font-size: .9em;
   margin: 0;
   padding: 0 5px 0 5px;
+  cursor: pointer;
 }
 
 @-moz-document url-prefix() {
@@ -154,6 +155,10 @@ ul {
 li {
   background-color: #CDF;
   padding: .4em;
+}
+
+#roomlist li {
+  cursor: pointer;
 }
 
 li:nth-child(odd) {
