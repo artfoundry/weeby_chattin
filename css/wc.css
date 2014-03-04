@@ -4,6 +4,7 @@ body {
   font-size: 100%;
   font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
   margin: 0;
+  padding: 0;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -104,10 +105,14 @@ body {
   background-color: white;
   border: 1px solid black;
   border-radius: 3px 0 0 3px;
-  height: 1.7em;
-  font-size: 1em;
+  height: 1.75em;
+  font-size: .9em;
   margin: 0;
   padding: 0 5px 0 5px;
+}
+
+.formstyle.roomname {
+  width: 9em;
 }
 
 .buttonstyle {
@@ -115,10 +120,16 @@ body {
   border: 1px solid black;
   border-left: 0;
   border-radius: 0 3px 3px 0;
-  height: 1.8em;
-  font-size: 1em;
+  height: 1.9em;
+  font-size: .9em;
   margin: 0;
   padding: 0 5px 0 5px;
+}
+
+@-moz-document url-prefix() {
+  .buttonstyle {
+    height: 1.89em;
+  }
 }
 
 .buttonstyle.solo {

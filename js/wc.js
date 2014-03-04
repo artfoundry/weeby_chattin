@@ -9,7 +9,6 @@ function listen() {
     if (event.target.id === "login") {
       user.login(updateUI);
       fbGetRoomList();
-      $("#login").off("click");
     }
     else if (event.target.id === "submitchat") {
       var message = $("#chatinput").val()
@@ -23,12 +22,7 @@ function listen() {
     }
     else if (event.target.id === "createroom") {
       var room = $("#roomname").val();
-      if (fbRoomExists(room) === false) {
-        user.setRoom(room);
-      }
-      else {
-        alert ("That room already exists. Use another name.");
-      };
+      checkRoomName(room);
     }
     else if (event.target.id === "logout") {
       user.logout(updateUI);
@@ -62,7 +56,7 @@ function updateRoomList(roomList) {
 }
 
 function updateUserList(userList) {
-  $("#userlist").empty();
+  $("#userlist").val("");
   userList.forEach(function(userData) {
     $("#userlist").append("<li>" + userData.val() + "</li>");
   });
@@ -75,25 +69,23 @@ function addChat(source, message) {
   fbChatListRef.push({uName: source, text: message});
 }
 
+function checkRoomName(room) {
+  var firebaseRef = new Firebase("https://weebychattin.firebaseio.com/");
+  firebaseRef.once("value", function(fbSnapshot) {
+    if (fbSnapshot.hasChild("rooms")) {
+      var roomList = fbSnapshot.child("rooms").val();
+      if (checkName(room, roomList, "#roomname") !== "")
+        user.setRoom(room);
+    };
+  });
+}
+
 function fbGetChat() {
   var fbChatListRef = new Firebase("https://weebychattin.firebaseio.com/rooms/" + user.currentRoom);
   fbChatListRef.limit(1).on("child_added", function(allChat) {
     var msgData = allChat.val();
     updateChatDiv(msgData);
   });
-}
-
-function fbRoomExists(room) {
-  var firebaseRef = new Firebase("https://weebychattin.firebaseio.com/");
-  var isFound = false;
-  firebaseRef.once("value", function(fbSnapshot) {
-    if (fbSnapshot.hasChild("rooms")) {
-      var roomList = fbSnapshot.child("rooms");
-      if (roomList.hasChild(room))
-        isFound = true;
-    };
-  });
-  return isFound;
 }
 
 function fbGetRoomList() {
@@ -148,7 +140,7 @@ User.prototype.removeFromRoom = function(userList) {
     }
     else {
       fbRoomRef.off("child_added");
-      fbGetUserList.off("value");
+      fbUserListRef.off("value");
     };
   });
   var message = "<i>" + user.username + " has left the room</i>";
@@ -188,7 +180,7 @@ User.prototype.login = function(callback) {
     if (fbSnapshot.hasChild("users"))
       userList = fbSnapshot.child("users").val();
     var name = $("#username").val();
-    user.username = user.checkName(name, userList);
+    user.username = checkName(name, userList, "#username");
     if (user.username !== "") { // empty string if there was an error
       firebaseRef.child("users").child(user.username).child("connections").push(true, user.updateConnectStatus).onDisconnect().remove();
       callback();
@@ -196,7 +188,7 @@ User.prototype.login = function(callback) {
   });
 }
 
-User.prototype.checkName = function(name, list) {
+function checkName(name, list, selector) {
   var searchStr = new RegExp(/[^a-z0-9 \-]/i);
   var newName = "";
   if (Object.keys(list).indexOf(name) > -1) {
@@ -208,5 +200,6 @@ User.prototype.checkName = function(name, list) {
   else {
     newName = name;
   };
+  $(selector).val("");
   return newName;
 };
