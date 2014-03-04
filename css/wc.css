@@ -79,8 +79,12 @@ body {
   margin: 1em;
 }
 
-#chatdiv div:nth-child(4) {
+.list_container.userlist {
   top: 15.5em;
+}
+
+.list_container.logout {
+  top: 26.5em;
 }
 
 .list {
@@ -115,6 +119,11 @@ body {
   font-size: 1em;
   margin: 0;
   padding: 0 5px 0 5px;
+}
+
+.buttonstyle.solo {
+  border-left: 1px solid black;
+  border-radius: 3px;
 }
 
 h1 {
