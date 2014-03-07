@@ -117,15 +117,6 @@ function User() { // User constructor
   this.currentRoomLoc = "";
 }
 
-User.prototype.updateConnectStatus = function() {
-  var fbUserRef = new Firebase("https://weebychattin.firebaseio.com/.info/connected");
-  fbUserRef.on("value", function(userData) {
-    if (userData.val() === false) // if not connected
-      // user.setRoom(""); -> not working
-      fbUserRef.remove();
-  });
-};
-
 User.prototype.logout = function(callback) {
   this.setRoom("");
   var fbUserRef = new Firebase("https://weebychattin.firebaseio.com/users/" + this.username);
@@ -181,7 +172,7 @@ User.prototype.login = function(callback) {
     var name = $("#username").val();
     user.username = checkName(name, userList, "#username");
     if (user.username !== "") { // empty string if there was an error
-      firebaseRef.child("users").child(user.username).child("connections").push(true, user.updateConnectStatus).onDisconnect().remove();
+      firebaseRef.child("users").child(user.username).child("connections").push(true).onDisconnect().remove();
       callback();
     };
   });
