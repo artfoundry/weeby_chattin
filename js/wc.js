@@ -145,9 +145,9 @@ User.prototype.removeFromRoom = function() {
       if (roomData.hasChild("--users") === false)
         fbRoomRef.remove();
     });
-    var message = "<i>" + user.username + " has left the room</i>";
-    addChat("System", message);
   });
+  var message = "<i>" + user.username + " has left the room</i>";
+  addChat("System", message);
 }
 
 User.prototype.setRoom = function(room) {
