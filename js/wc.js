@@ -35,7 +35,10 @@ function listen() {
 
 function updateUI() {
   $("#logindiv").toggle();
+  $("#chatdisplay").empty();
   $("#chatdiv").toggle();
+  $("#roomlist").empty();
+  $("#userlist").empty();
   $("#printname").text(user.username);
 }
 
@@ -111,6 +114,7 @@ function fbGetUserList() {
 function User() { // User constructor
   this.username = "";
   this.currentRoom = "";
+  this.currentRoomLoc = "";
 }
 
 User.prototype.updateConnectStatus = function() {
@@ -128,44 +132,35 @@ User.prototype.logout = function(callback) {
   fbUserRef.remove(function(){
     this.username = "";
     this.currentRoom = "";
+    this.currentRoomLoc = "";
   });
   callback();
 }
 
-User.prototype.removeFromRoom = function(userList) {
-  var userIndex = userList.indexOf(user.username);
-  var fbUserRef = new Firebase("https://weebychattin.firebaseio.com/rooms/" + this.currentRoom + "/--users/" + userIndex);
+User.prototype.removeFromRoom = function() {
+  var fbUserRef = new Firebase(this.currentRoomLoc);
   var fbRoomRef = fbUserRef.parent().parent();
-  fbUserRef.remove();
-  fbRoomRef.once("value", function(roomData) {
-    if (roomData.hasChild("--users") === false) {
-      fbRoomRef.remove();
-    }
-    else {
-      fbRoomRef.off("child_added");
-      fbUserListRef.off("value");
-    };
+  fbUserRef.remove(function() {
+    fbRoomRef.once("value", function(roomData) {
+      if (roomData.hasChild("--users") === false)
+        fbRoomRef.remove();
+    });
+    var message = "<i>" + user.username + " has left the room</i>";
+    addChat("System", message);
   });
-  var message = "<i>" + user.username + " has left the room</i>";
-  addChat("System", message);
 }
 
 User.prototype.setRoom = function(room) {
   var firebaseRef = new Firebase("https://weebychattin.firebaseio.com");
   firebaseRef.once("value", function(fbSnapshot) {
-    var userList = [];
     if (fbSnapshot.hasChild("rooms")) {
-      if (user.currentRoom !== "") { // if currently in a room
-        userList = fbSnapshot.child("rooms").child(user.currentRoom).child("--users").val();        
-        user.removeFromRoom(userList);
-        userList.length = 0; // wipe the list clean in case the room moving to is new
-      };
-      if ((room != "") && (fbSnapshot.child("rooms").hasChild(room))) // if joining a room already created
-        userList = fbSnapshot.child("rooms").child(room).child("--users").val();
+      if (user.currentRoom !== "") // if currently in a room
+        user.removeFromRoom();
     };
     if (room !== "") {
-      userList.push(user.username);
-      firebaseRef.child("rooms").child(room).child("--users").set(userList);
+      var fbUserRoomRef = firebaseRef.child("rooms").child(room).child("--users").push(user.username);
+      fbUserRoomRef.onDisconnect().remove();
+      user.currentRoomLoc = fbUserRoomRef.toString();
       user.currentRoom = room;
       fbGetRoomList();
       fbGetUserList();
