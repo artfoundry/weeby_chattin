@@ -1,7 +1,7 @@
 Weeby Chattin
 ==============
 
-Web based chat service created for engineering simulation for Weeby.
+Web based chat service created as a demo for Weeby.
 
 Summary
 =======
