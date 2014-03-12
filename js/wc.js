@@ -121,24 +121,26 @@ User.prototype.logout = function(callback) {
   this.setRoom("");
   var fbUserRef = new Firebase("https://weebychattin.firebaseio.com/users/" + this.username);
   fbUserRef.remove(function(){
-    this.username = "";
-    this.currentRoom = "";
-    this.currentRoomLoc = "";
+    user.username = "";
+    user.currentRoom = "";
+    user.currentRoomLoc = "";
   });
   callback();
 }
 
 User.prototype.removeFromRoom = function() {
-  var fbUserRef = new Firebase(this.currentRoomLoc);
-  var fbRoomRef = fbUserRef.parent().parent();
-  fbUserRef.remove(function() {
-    fbRoomRef.once("value", function(roomData) {
-      if (roomData.hasChild("--users") === false)
-        fbRoomRef.remove();
+  if (this.currentRoomLoc !== "") {
+    var fbUserRef = new Firebase(this.currentRoomLoc);
+    var fbRoomRef = fbUserRef.parent().parent();
+    fbUserRef.remove(function() {
+      fbRoomRef.once("value", function(roomData) {
+        if (roomData.hasChild("--users") === false)
+          fbRoomRef.remove();
+      });
     });
-  });
-  var message = "<i>" + user.username + " has left the room</i>";
-  addChat("System", message);
+    var message = "<i>" + user.username + " has left the room</i>";
+    addChat("System", message);
+  };
 }
 
 User.prototype.setRoom = function(room) {
@@ -150,8 +152,8 @@ User.prototype.setRoom = function(room) {
     };
     if (room !== "") {
       var fbUserRoomRef = firebaseRef.child("rooms").child(room).child("--users").push(user.username);
-      fbUserRoomRef.onDisconnect().remove();
       user.currentRoomLoc = fbUserRoomRef.toString();
+      fbUserRoomRef.onDisconnect().remove();
       user.currentRoom = room;
       fbGetRoomList();
       fbGetUserList();
