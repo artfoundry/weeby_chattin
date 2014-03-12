@@ -79,14 +79,8 @@ body {
   height: 7em;
   margin: 1em;
 }
-
-.list_container.userlist {
-  top: 15.5em;
-}
-
-.list_container.logout {
-  top: 26.5em;
-}
+.list_container.userlist { top: 15.5em; }
+.list_container.logout { top: 26.5em; height: 2em;}
 
 .list {
   width: 90%;
@@ -109,11 +103,10 @@ body {
   font-size: .9em;
   margin: 0;
   padding: 0 5px 0 5px;
+  width: 10em;
 }
-
-.formstyle.roomname {
-  width: 9em;
-}
+.formstyle.roomname { width: 9em; }
+.formstyle.chatinput { width: 15em; }
 
 .buttonstyle {
   background-color: lightgray;
@@ -126,45 +119,34 @@ body {
   padding: 0 5px 0 5px;
   cursor: pointer;
 }
+@-moz-document url-prefix() { .buttonstyle { height: 1.89em; } }
+.buttonstyle.solo { border-left: 1px solid black; border-radius: 3px; }
 
-@-moz-document url-prefix() {
-  .buttonstyle {
-    height: 1.89em;
-  }
-}
+.hidden { display: none; }
 
-.buttonstyle.solo {
-  border-left: 1px solid black;
-  border-radius: 3px;
-}
+h1 { color: darkblue; text-shadow: 2px 2px 4px #666; }
 
-h1 {
-  color: darkblue;
-  text-shadow: 2px 2px 4px #666;
-}
+ul { padding-left: 0; margin: 0; }
+li { background-color: #CDF; padding: .4em; }
+li:nth-child(odd) { background-color: #CCF; }
+#roomlist li { cursor: pointer; }
 
-.hidden {
-  display: none;
-}
+#newroom { text-align: left; }
 
-ul {
-  padding-left: 0;
-  margin: 0;
-}
-
-li {
-  background-color: #CDF;
-  padding: .4em;
-}
-
-#roomlist li {
-  cursor: pointer;
-}
-
-li:nth-child(odd) {
-  background-color: #CCF;
-}
-
-#newroom {
-  text-align: left;
+@media only screen and (max-width: 800px) {
+  #page_container { width: 316px; height: 52em; margin: auto; top: 0; left: 0; }
+  #logindiv { width: 316px; margin: auto; top: 0; left: 0; padding: 0;}
+  #chatdiv { width: 316px; height: 100%; top: 0; margin: auto; left: 0; }
+  #chatdiv div:nth-of-type(n + 2) h2 { -webkit-margin-start: -0.83em; }
+  #chatdisplay_container { width: 250px; top: 2em; text-align: left;}
+  #chatdisplay_container h2 { -webkit-margin-start: -1em; -webkit-margin-before: 1.5em; font-size: 90%; }
+  #chatdisplay { margin-top: 25em;}
+  .list_container { width: 250px; left: 2em; top: 4em; }
+  .list_container.userlist { top: 16em; }
+  .list_container.logout { top: 3em; left: 2em; text-align: right;}
+  .formstyle.roomname { width: 8em; }
+  .formstyle.chatinput { width: 9em; }
+  .formstyle.login { width: 7em; }
+  h4 { display: none; }
+  .buttonstyle { border: 1px solid black; border-radius: 0; }
 }
